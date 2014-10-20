@@ -16,10 +16,7 @@
                              (range 1 n))
                     )
              )
-       )
-      )
-    )
-  )
+       ))))
 
 (defn print-answers [num-items]
   (loop [i 0 answers (min-cost num-items)]
@@ -33,6 +30,5 @@
       )
     )
   )
-
 
 
