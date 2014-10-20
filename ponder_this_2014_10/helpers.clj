@@ -25,9 +25,16 @@
                  (filter #(not (= % factor)) remaining))))))
 
 
-(defn pow [a b]
+(defn pow-old [a b]
   (loop [accum 1 factors-left b]
     (if (< factors-left 1) accum (recur (* accum a) (- factors-left 1)))))
+
+(defn pow [a b]
+  (loop [accum 1 factors-left b base a]
+    (if (< factors-left 1) accum
+        (if (= (mod factors-left 2) 1)
+          (recur (* accum base) (/ (- factors-left 1) 2) (* base base))
+          (recur accum (/ factors-left 2) (* base base))))))
 
 (defn gcd [a b]
   (if (= a 0) b
@@ -46,25 +53,30 @@
                        [(nth pair 0) (- (nth pair 1) 1)])
                  remaining-pairs)))))
 
-(defn solve-it [base max-exp mod-by offset]
+(defn solve-it [base max-exp mod-by]
   ;;; About this
-  ;;; Computes [base ^ ((base + 1) ^ ... ^ max-exp)] - offset modulo mod-by
-  (if (= max-exp base) (mod (+ base mod-by (- offset)) mod-by)
-      (if (= (mod base mod-by) 1) 1
-          (loop [accum 1 next-offset 0 mod-by-with-factors-removed mod-by]
-            (if (= (mod mod-by-with-factors-removed base) 0)
-              ;;; we remove a factor from mod-by-with-factors-removed
-              ;;; and adjust next-offset
-              (recur (* base accum) (+ next-offset 1)
-                     (/ mod-by-with-factors-removed base))
-              ;;; otherwise we make the final call
-              (let [next-mod-by (get-next-mod-by mod-by-with-factors-removed)]
-                (mod (* accum
-                        (pow base
-                             (+
-                              (solve-it (+ base 1) max-exp
-                                        next-mod-by next-offset)
-                              next-mod-by (- offset))))
-                   mod-by)
-              ))))))
+  ;;; Computes [base ^ ((base + 1) ^ ... ^ max-exp)]  modulo mod-by
+  (println "Recursing with args " (str (list base max-exp mod-by)))
+  (if (= max-exp base) (mod base mod-by)
+      (if (= (gcd mod-by base) mod-by) 0
+          (if (= (mod base mod-by) 1) 1
+              (loop [accum 1 offset-exp 0 mod-by-with-factors-removed mod-by]
+                (if (= (mod mod-by-with-factors-removed base) 0)
+                ;;; we remove a factor from mod-by-with-factors-removed
+                ;;; and adjust offset-exp
+                  (recur (* base accum) (+ offset-exp 1)
+                         (/ mod-by-with-factors-removed base))
+                ;;; otherwise we make the final call
+                  (let [next-mod-by (get-next-mod-by
+                                     mod-by-with-factors-removed)]
+                    (mod (* accum
+                            (pow base
+                                 (mod
+                                  (-
+                                   (solve-it (+ base 1) max-exp
+                                             next-mod-by)
+                                   offset-exp) next-mod-by)))
+                         mod-by)
+              )))))))
+
       
