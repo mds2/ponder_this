@@ -23,7 +23,8 @@ The challenge this month is to find sums that are generated from exactly 29 diff
 
 To rule out trivial solution, we further require that each matrix have no more than 50 bits.
 
-Please provide your answer as two lines, the first line with N integers and the second with M integers. N*M should be no more than 50.
+Please provide your answer as two lines, the first line with N integers and the second 
+with M integers. N*M should be no more than 50.
 
 Short answers
 -----
