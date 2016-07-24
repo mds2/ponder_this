@@ -176,7 +176,17 @@ and
 	F F G G
 	F F G G
 
+
 Final proof
 ------------
+
+Given our construction that allows us to generate copies of our tiles
+scaled up by a factor of 4 in each dimension from unscaled copies of our tiles,
+we can, by induction, make a `4^m x 4^m` copy of our tiles for any `m`
+
+To fill a `4^n x 4^n` board with one square missing, first we make
+copies of our tiles scaled by `4^(n-1)` in each dimension.
+
+Then we fill 
 
     
