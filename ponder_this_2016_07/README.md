@@ -28,14 +28,14 @@ First pentomino shape
 
     x x
     x
-	x
-	x
+    x
+    x
 
 Second pentomino shape
 
     x x
     x x
-	x
+    x
 
 Tilings of a 4x4 board
 --------------------
@@ -44,17 +44,17 @@ With a corner missing
 
     1 1 2 2
     1 1 2 2
-	1 3 3 2
-	3 3 3
+    1 3 3 2
+    3 3 3
 
 With rotations, we can align the missing corner square with any corner
 
 With an edge square missing
 
     1 1 2 2
-	1 3 3 2
-	1 3 3 2
-	1 3   2
+    1 3 3 2
+    1 3 3 2
+    1 3   2
 
 With rotations and reflections, we can align the missing edge square with
 any non-corner edge square.
@@ -63,8 +63,8 @@ With one of the 4 squares missing which are not on any edge
 
     1 1 2 2
     1 3   2
-	1 3 3 2
-	1 3 3 2
+    1 3 3 2
+    1 3 3 2
 
 With rotations, this can match any of the 4 squares that are not on any edge.
 
@@ -84,25 +84,25 @@ block 1 is just a 4x4 block with a corner piece missing
 
     1 1 2 2
     1 1 2 2
-	1 3 3 2
-	3 3 3 .
+    1 3 3 2
+    3 3 3 .
 
 block 2 overhangs by one square, and has two internal missing squares.
 
     1
     1 1 3 3
-	1 1 3 3
-	2 2 2 3
-	2 2 . .
+    1 1 3 3
+    2 2 2 3
+    2 2 . .
 
 block 3 overhangs by 2 squares, and has 3 internal missing squares
 
     1
     1
-	1 2 2 2
-	1 1 2 2
-	3 3 3 3
-	3 . . .
+    1 2 2 2
+    1 1 2 2
+    3 3 3 3
+    3 . . .
 
 blocks 4 and 6 each overhang by 3 squares and have 4 internal missing squraes
 
@@ -110,34 +110,34 @@ block 4
 
     1
     1
-	1
-	1 1 2 2
-	3 3 2 2
-	3 3 3 2
-	. . . .
+    1
+    1 1 2 2
+    3 3 2 2
+    3 3 3 2
+    . . . .
 
 block 6
 
     1 1 1
     1 1 2 2
-	3 3 2 2
-	3 3 3 2
-	. . . .
+    3 3 2 2
+    3 3 3 2
+    . . . .
 
 block 5, by our scheme, would have 5 internal missing squares, but we will
 fill these with an extr tile, to yield a 5x4 completely filled block
 
     1 1 2 2
     1 1 2 2
-	1 3 4 2
-	3 3 4 4
-	3 3 4 4
+    1 3 4 2
+    3 3 4 4
+    3 3 4 4
 
 To compose our larger pieces out of our blocks, we can do the following
 
 
     2 1
-	3 4 5
+    3 4 5
 
 and
 
@@ -149,32 +149,32 @@ Drawn out, these shapes look like
 
     5 5 4 4 4 1 1 1
     5 5 4 4 2 2 1 1
-	7 5 6 6 2 2 3 3
-	7 6 6 6 2 3 3 3
-	7 8 8 8 A A A D D D E E
-	7 7 8 8 A A B D D E E E
-	9 9 9 9 C B B F F G G G
-	9 C C C C B B F F F G G
+    7 5 6 6 2 2 3 3
+    7 6 6 6 2 3 3 3
+    7 8 8 8 A A A D D D E E
+    7 7 8 8 A A B D D E E E
+    9 9 9 9 C B B F F G G G
+    9 C C C C B B F F F G G
 
 
 and
 
     5 5 4 4 4 1 1 1
     5 5 4 4 2 2 1 1
-	7 5 6 6 2 2 3 3
-	7 6 6 6 2 3 3 3
-	7 8 8 8
-	7 7 8 8
-	9 9 9 9
-	9 A A A
-	B B A A
-	B B C C
-	B C C C
-	D D E E
-	D D E E
-	D F G E
-	F F G G
-	F F G G
+    7 5 6 6 2 2 3 3
+    7 6 6 6 2 3 3 3
+    7 8 8 8
+    7 7 8 8
+    9 9 9 9
+    9 A A A
+    B B A A
+    B B C C
+    B C C C
+    D D E E
+    D D E E
+    D F G E
+    F F G G
+    F F G G
 
 
 Final proof
