@@ -180,13 +180,32 @@ and
 Final proof
 ------------
 
+To show that our choice of pentominoes can fill any `4^n x 4^n` board with
+any arbitrary one square missing, we will induct on `n`.
+
+For our base case, recall our tilings of a `4x4` board with one tile missing
+using our selection of pentominoes.
+
+Now on to our inductive step.
+
 Given our construction that allows us to generate copies of our tiles
 scaled up by a factor of 4 in each dimension from unscaled copies of our tiles,
-we can, by induction, make a `4^m x 4^m` copy of our tiles for any `m`
+we can, by an inductive argument that we omit here, make `4^m x 4^m`
+copies of each of our tiles for any `m`
 
 To fill a `4^n x 4^n` board with one square missing, first we make
 copies of our tiles scaled by `4^(n-1)` in each dimension.
 
-Then we fill 
+Then we subdivide our board into non-overlapping squares of size `4^(n-1)`.
+We make note of which of these non-overlapping squares contains the square
+to be left missing.
+
+Then, using our tiles that have been scaled up by
+`4^(n-1)` in each dimension,
+fill all of our board except for the `4^(n-1) x 4^(n-1)` subsquare
+containing the missing square.
+
+The subsquare containing the missing square is now empty, and is, thus
+a smaller version of our original problem.  Induct accordingly.
 
     
