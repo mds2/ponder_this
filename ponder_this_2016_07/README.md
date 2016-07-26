@@ -13,7 +13,7 @@ Solution
 Strategy
 -----------
 
-Analogously to a possible proof of the Golomb tromino theorem (and without looking at the Lenchner et al paper that comes up when I search for the actual Golomb tromino theorem -- hopefully the details of mine will be different from that one) we will adopt a recursive solution.
+Analogously to a possible proof of the Golomb tromino theorem (and without looking at the Befumo and Lenchner paper that comes up when I search for the actual Golomb tromino theorem -- hopefully the details of mine will be different from that one) we will adopt a recursive solution.
 
 Namely we will first show that 2 free pentominoes are sufficient to tile a 4x4 checkerboard with any one square missing.
 
