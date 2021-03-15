@@ -106,6 +106,7 @@ print("resulting grid looks like")
 print("")
 
 whole_grid_sum = 0
+results_sum = 0
 
 for row in range(rows):
     to_print = []
@@ -113,11 +114,13 @@ for row in range(rows):
         whole_grid_sum += grid[row][col]
         if (row, col) in results:
             to_print.append("{:2x}".format(grid[row][col] + 128))
+            results_sum += grid[row][col]
         else:
             to_print.append("__")
     print(" ".join(to_print))
 
 print("")
 print("whole grid summed to " + str(whole_grid_sum))
+print("selected cells summed to " + str(results_sum))
 
 
