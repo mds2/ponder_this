@@ -50,6 +50,33 @@ E5 D7 05 D7 7D 9C C9 F5 70 0B 17 7B EF 18 83 46 79 0D 49 59"""
 # 09 DD BE DE
 # C9 5A 1D 36"""
 
+
+"""
+Solution approach:
+
+Imagine the frontier of the explored cells.
+
+If the deepest row that hax been explored in column i is r_i,
+then, in column i+1, r_i-1 *must* have been explored, while
+r_i+2 *cannot* have been explored.
+
+This admits a simple sweepline dynamic programming solution.
+
+Sweep through the columns, for each column, c, for each row, r, in c,
+calculate the optimal value of the subproblem of what the maximum
+score is on columns 0 through c for any valid set of cells such that
+the last row explored in c is r.
+
+This is just the sum of the values in c up to row r, plus the max of
+the memoized values in [r-1, c-1], [r, c-1], and [r+1, c-1].
+
+To then find the optimal set of cells for the whole grid, 
+we find the highest memoized value for the last column, and sweep back
+the other direction, determining whether this value came from
+[r-1, c-1], [r, c-1], or [r+1, c-1].
+
+"""
+
 grid = [[int(x, 16) - 128 for x in g.split()] for g in grid.split("\n")]
 # print(grid)
 
@@ -57,7 +84,7 @@ grid = [[int(x, 16) - 128 for x in g.split()] for g in grid.split("\n")]
 
 memo = []
 
-curr_col = []
+curr_col = [(0, None)]
 runsum = 0
 
 for row in range(rows):
@@ -69,9 +96,10 @@ memo.append(curr_col)
 for col in range(1, cols):
     curr_col = []
     runsum = 0
-    for row in range(rows):
-        runsum += grid[row][col]
-        prev_cands = range(max(row-1, 0), min(row+2, rows))
+    for row in range(rows+1):
+        if row > 0:
+            runsum += grid[row-1][col]
+        prev_cands = range(max(row-1, 0), min(row+2, rows+1))
         best = -257
         best_cand = None
         for cand in prev_cands:
@@ -83,17 +111,21 @@ for col in range(1, cols):
 
 best = -257
 best_row = None
-for i in range(rows):
-    if memo[-1][i][0] > best:
+for i in range(rows+1):
+    if memo[-1][i][0] >= best:
         best = memo[-1][i][0]
         best_row = i
+
+# best_row = 11
+# best = memo[-1][best_row][0]
+
 
 results = []
 
 print("best score is " + str(best))
 
 for col in range(cols-1, -1, -1):
-    for row in range(best_row + 1):
+    for row in range(best_row):
         results.append((row, col))
     best_row = memo[col][best_row][1]
 
@@ -119,8 +151,67 @@ for row in range(rows):
             to_print.append("__")
     print(" ".join(to_print))
 
+for row in range(rows):
+    to_print = []
+    for col in range(cols):
+        if (row, col) not in results:
+            to_print.append("{:2x}".format(grid[row][col] + 128))
+        else:
+            to_print.append("__")
+    print(" ".join(to_print))
+
 print("")
 print("whole grid summed to " + str(whole_grid_sum))
 print("selected cells summed to " + str(results_sum))
 
+"""
+And here we create a visualization of the costs of each cell overlaid
+with the boundary of the optimal set of cells to explore.
 
+If the image processing lib PIL does not exist on this system, then this
+part exits out without producing a visualization.
+"""
+
+
+try:
+    from PIL import Image
+
+    scale = 15
+
+    line_thick = 3
+
+    im = Image.new("RGB", (scale * rows, scale * cols))
+
+    tr = lambda a,b: (b, a)
+    for row in range(rows):
+        for col in range(cols):
+            rgb = grid[row][col] + 128
+            rgb = (rgb, rgb, rgb)
+            if rgb[0] > 128:
+                rgb = (min(255, rgb[0] + 20), rgb[1], max(0, rgb[2] - 20))
+            elif rgb[0] < 128:
+                rgb = (max(0, rgb[0] - 20), rgb[1], min(255, rgb[2] + 20))
+            top_line = False
+            if (row - 1, col) in results and not (row, col) in results:
+                top_line = True
+            left_line = False
+            if (row, col-1) in results and not (row, col) in results:
+                left_line = True
+            if (row, col) in results and not (row, col-1) in results:
+                left_line = True
+            for c in range(scale*col, scale*(col + 1)):
+                for r in range(scale*row , scale * (row + 1)):
+                    is_line = False
+                    if c < scale*col + line_thick:
+                        is_line = is_line or left_line
+                    if r < scale*row + line_thick:
+                        is_line = is_line or top_line
+                    if is_line:
+                        im.putpixel(tr(r, c), (255,0,0))
+                    else:
+                        im.putpixel(tr(r, c), rgb)
+
+    im.save("viz.png")
+
+except:
+    print("Could not produce visualization image : no PIL")
